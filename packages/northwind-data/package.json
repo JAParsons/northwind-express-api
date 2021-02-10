@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "name": "@northwind/northwind-data",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "repository": "git@github.com:JAParsons/northwind-express-api.git",
+  "author": "JAParsons <johnparsons932@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
+}
