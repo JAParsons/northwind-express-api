@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "name": "@northwind/express-server",
+  "version": "1.0.0",
+  "main": "@northwind/index.js",
+  "type": "module",
+  "repository": "git@github.com:JAParsons/northwind-express-api.git",
+  "author": "JAParsons <johnparsons932@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

@@ -1,20 +1,24 @@
 {
-  "name": "northwind-express-api",
+  "private": true,
+  "name": "northwind",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon",
+    "start": "nodemon packages/express-server",
     "test": "jest"
   },
   "repository": "git@github.com:JAParsons/northwind-express-api.git",
   "author": "JAParsons <johnparsons932@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "@northwind/express-server": "1.0.0"
   },
   "devDependencies": {
     "jest": "^26.6.3",
     "nodemon": "^2.0.7"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
