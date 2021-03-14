@@ -12,7 +12,7 @@ const connectToSqliteDatabase = async ({
       driver
     });
   } catch (error) {
-    console.error(error);
+    return error;
   }
   return db;
 };
