@@ -5,16 +5,10 @@ const connectToSqliteDatabase = async ({
   filename,
   driver = sqlite3.Database
 }) => {
-  let db;
-  try {
-    db = await open({
-      filename,
-      driver
-    });
-  } catch (error) {
-    return error;
-  }
-  return db;
+  return await open({
+    filename,
+    driver
+  });
 };
 
 export default connectToSqliteDatabase;

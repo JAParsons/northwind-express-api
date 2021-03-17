@@ -1,15 +1,17 @@
-// CHECK IF BABEL ACTUALLY WORKS
 import sqlite3 from 'sqlite3';
 import connectToSqliteDatabase from './connect-to-database';
 
-it('connects to a sqlite database', () => {
+it('can connect to a sqlite database', async () => {
   // Arrange
-  const filename = './northwind-db';
+  const filename = `packages/northwind-data/src/northwind-db.sqlite`;
   const driver = sqlite3.Database;
 
   // Act
-  const connection = connectToSqliteDatabase({ filename, driver });
+  const northwindDb = await connectToSqliteDatabase({ filename, driver });
 
   // Assert
-  expect(typeof connection).toBe(Object);
+  expect(northwindDb).toHaveProperty('config');
+  expect(northwindDb.config).toHaveProperty('filename');
+  expect(northwindDb.config).toHaveProperty('driver');
+  expect(northwindDb).toHaveProperty('db');
 });
