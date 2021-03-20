@@ -7,6 +7,9 @@
   "repository": "git@github.com:JAParsons/northwind-express-api.git",
   "author": "JAParsons <johnparsons932@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "setup_db": "node ./scripts/setup_db.js"
+  },
   "dependencies": {
     "sqlite": "^4.0.19",
     "sqlite3": "^5.0.2"
