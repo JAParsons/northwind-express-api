@@ -1,3 +1,9 @@
-const NorthwindAdapter = async ({ conn }) => {};
+const northwindAdapter = {
+  getProductById: async (db, id) => await getProductById(db, id)
+};
 
-export default NorthwindAdapter;
+const getProductById = async (db, id) => {
+  return await db.all(`SELECT * FROM Product WHERE Id = ${id}`);
+};
+
+export default northwindAdapter;
