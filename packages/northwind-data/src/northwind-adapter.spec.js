@@ -10,6 +10,7 @@ beforeAll(async () => {
 
 afterEach(async () => {
   await db.exec(`DELETE FROM Product`);
+  await db.exec(`DELETE FROM "Order"`);
 });
 
 it('can get a product by id', async () => {
@@ -31,4 +32,27 @@ it('can get a product by id', async () => {
   // Assert
   expect(product).toBeDefined();
   expect(product.Id).toBe(productId);
+});
+
+it('can get an order by customerId', async () => {
+  // Arrange
+  const customerId = '1';
+  await db.run(
+    `INSERT INTO 'Order' (
+      CustomerId, EmployeeId, OrderDate, RequiredDate, ShippedDate, ShipVia,
+      Freight, ShipName, ShipAddress, ShipCity, ShipRegion, ShipPostalCode,
+      ShipCountry
+      )
+    VALUES (
+      ${customerId}, 1, DATETIME('now'), DATETIME('now'), DATETIME('now'), 1,
+      1, '', '', '', '', '', ''
+      );`
+  );
+
+  // Act
+  const [order] = await northwindAdapter.getOrdersByCustomerId(db, 1);
+
+  // Assert
+  expect(order).toBeDefined();
+  expect(order.CustomerId).toBe(customerId);
 });
