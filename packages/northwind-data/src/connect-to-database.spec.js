@@ -3,7 +3,7 @@ import connectToSqliteDatabase from './connect-to-database';
 
 it('can connect to a sqlite database', async () => {
   // Arrange
-  const filename = `packages/northwind-data/src/northwind-db.sqlite`;
+  const filename = `packages/northwind-data/northwind-db.sqlite`;
   const driver = sqlite3.Database;
 
   // Act
