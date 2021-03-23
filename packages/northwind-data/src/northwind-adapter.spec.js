@@ -35,11 +35,16 @@ it('can get all orders for a customer', async () => {
   // Arrange
   const customerId = '1';
   await insertOrder(db, customerId);
+  await insertOrder(db, customerId);
+  await insertOrder(db, customerId);
 
   // Act
-  const [order] = await northwindAdapter.getOrdersByCustomerId(db, 1);
+  const orders = await northwindAdapter.getOrdersByCustomerId(db, 1);
 
   // Assert
-  expect(order).toBeDefined();
-  expect(order.CustomerId).toBe(customerId);
+  expect(orders).toBeDefined();
+  expect(orders).toHaveLength(3);
+  expect(orders[0].CustomerId).toBe(customerId);
+  expect(orders[1].CustomerId).toBe(customerId);
+  expect(orders[2].CustomerId).toBe(customerId);
 });
