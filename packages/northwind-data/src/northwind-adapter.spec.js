@@ -13,6 +13,10 @@ afterEach(async () => {
   await db.exec(`DELETE FROM "Order"`);
 });
 
+afterAll(async () => {
+  await db.close();
+});
+
 it('can get a product by id', async () => {
   // Arrange
   const productId = 1;
