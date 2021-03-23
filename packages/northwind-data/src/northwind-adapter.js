@@ -8,7 +8,7 @@ const getProductById = async (db, id) => {
   return await db.all(`SELECT * FROM Product WHERE Id = ${id}`);
 };
 const getOrdersByCustomerId = async (db, customerId) => {
-  return await db.all(`SELECT * FROM "Order" WHERE Id = ${customerId}`);
+  return await db.all(`SELECT * FROM "Order" WHERE CustomerId = ${customerId}`);
 };
 
 export default northwindAdapter;
