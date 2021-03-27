@@ -10,18 +10,27 @@ const insertProduct = async (db, productId) => {
   );
 };
 
-const insertOrder = async (db, customerId) => {
+const insertOrder = async (db, { orderId, customerId }) => {
   return await db.run(
     `INSERT INTO 'Order' (
-          CustomerId, EmployeeId, OrderDate, RequiredDate, ShippedDate, ShipVia,
+          Id, CustomerId, EmployeeId, OrderDate, RequiredDate, ShippedDate, ShipVia,
           Freight, ShipName, ShipAddress, ShipCity, ShipRegion, ShipPostalCode,
           ShipCountry
           )
         VALUES (
-          ${customerId}, 1, DATETIME('now'), DATETIME('now'), DATETIME('now'), 1,
+          ${orderId}, ${customerId}, 1, DATETIME('now'), DATETIME('now'), DATETIME('now'), 1,
           1, '', '', '', '', '', ''
           );`
   );
 };
 
-export { insertProduct, insertOrder };
+const insertOrderDetail = async (db, { orderDetailId, orderId }) => {
+  return await db.run(
+    `INSERT INTO OrderDetail (
+      Id, OrderId, ProductId, UnitPrice, Quantity, Discount
+      )
+        VALUES (${orderDetailId}, ${orderId}, 1, 1, 1, 0);`
+  );
+};
+
+export { insertProduct, insertOrder, insertOrderDetail };

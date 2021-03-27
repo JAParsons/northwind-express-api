@@ -1,6 +1,10 @@
 import northwindAdapter from './northwind-adapter';
 import connectToDatabase from './connect-to-database';
-import { insertProduct, insertOrder } from './test-utils/test-utils';
+import {
+  insertProduct,
+  insertOrder,
+  insertOrderDetail
+} from './test-utils/test-utils';
 
 const filename = `packages/northwind-data/northwind-db.sqlite`;
 let db;
@@ -12,13 +16,14 @@ beforeAll(async () => {
 afterEach(async () => {
   await db.exec(`DELETE FROM Product`);
   await db.exec(`DELETE FROM "Order"`);
+  await db.exec(`DELETE FROM OrderDetail`);
 });
 
 afterAll(async () => {
   await db.close();
 });
 
-it('can get a product by id', async () => {
+it('gets a product by id', async () => {
   // Arrange
   const productId = 1;
   await insertProduct(db, productId);
@@ -31,15 +36,15 @@ it('can get a product by id', async () => {
   expect(product.Id).toBe(productId);
 });
 
-it('can get all orders for a customer', async () => {
+it('gets all orders for a customer', async () => {
   // Arrange
   const customerId = '1';
-  await insertOrder(db, customerId);
-  await insertOrder(db, customerId);
-  await insertOrder(db, customerId);
+  await insertOrder(db, { orderId: 1, customerId });
+  await insertOrder(db, { orderId: 2, customerId });
+  await insertOrder(db, { orderId: 3, customerId });
 
   // Act
-  const orders = await northwindAdapter.getOrdersByCustomerId(db, 1);
+  const orders = await northwindAdapter.getOrdersByCustomerId(db, customerId);
 
   // Assert
   expect(orders).toBeDefined();
@@ -48,3 +53,29 @@ it('can get all orders for a customer', async () => {
   expect(orders[1].CustomerId).toBe(customerId);
   expect(orders[2].CustomerId).toBe(customerId);
 });
+
+it('gets all the orderDetails for an order', async () => {
+  // Arrange
+  const orderId = 1;
+  const customerId = '1';
+  const orderDetailId1 = '1';
+  const orderDetailId2 = '2';
+
+  await insertOrder(db, { orderId, customerId });
+  await insertOrderDetail(db, { orderDetailId: orderDetailId1, orderId });
+  await insertOrderDetail(db, { orderDetailId: orderDetailId2, orderId });
+
+  // Act
+  const orderDetails = await northwindAdapter.getOrderDetailsByOrderId(
+    db,
+    orderId
+  );
+
+  // Assert
+  expect(orderDetails).toBeDefined();
+  expect(orderDetails).toHaveLength(2);
+  expect(orderDetails[0].OrderId).toBe(orderId);
+  expect(orderDetails[1].OrderId).toBe(orderId);
+});
+
+// TODO - it only gets orderDetails for the specified order
