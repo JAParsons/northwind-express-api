@@ -54,6 +54,22 @@ it('gets all orders for a customer', async () => {
   expect(orders[2].CustomerId).toBe(customerId);
 });
 
+it('only gets orders for the specified customer', async () => {
+  // Arrange
+  const customerId1 = '1';
+  const customerId2 = '2';
+  await insertOrder(db, { orderId: 1, customerId: customerId1 });
+  await insertOrder(db, { orderId: 2, customerId: customerId2 });
+
+  // Act
+  const orders = await northwindAdapter.getOrdersByCustomerId(db, customerId1);
+
+  // Assert
+  expect(orders).toBeDefined();
+  expect(orders).toHaveLength(1);
+  expect(orders[0].CustomerId).toBe(customerId1);
+});
+
 it('gets all the orderDetails for an order', async () => {
   // Arrange
   const orderId = 1;
@@ -78,4 +94,32 @@ it('gets all the orderDetails for an order', async () => {
   expect(orderDetails[1].OrderId).toBe(orderId);
 });
 
-// TODO - it only gets orderDetails for the specified order
+it('only gets orderDetails for the specified order', async () => {
+  // Arrange
+  const orderId1 = 1;
+  const orderId2 = 2;
+  const customerId = '1';
+  const orderDetailId1 = '1';
+  const orderDetailId2 = '2';
+
+  await insertOrder(db, { orderId: orderId1, customerId });
+  await insertOrderDetail(db, {
+    orderDetailId: orderDetailId1,
+    orderId: orderId1
+  });
+  await insertOrderDetail(db, {
+    orderDetailId: orderDetailId2,
+    orderId: orderId2
+  });
+
+  // Act
+  const orderDetails = await northwindAdapter.getOrderDetailsByOrderId(
+    db,
+    orderId1
+  );
+
+  // Assert
+  expect(orderDetails).toBeDefined();
+  expect(orderDetails).toHaveLength(1);
+  expect(orderDetails[0].OrderId).toBe(orderId1);
+});
