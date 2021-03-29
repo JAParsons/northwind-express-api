@@ -33,7 +33,43 @@ it('gets a product by id', async () => {
 
   // Assert
   expect(product).toBeDefined();
+  expect(product).toHaveProperty('Id');
   expect(product.Id).toBe(productId);
+  expect(product).toHaveProperty('ProductName');
+  expect(product).toHaveProperty('SupplierId');
+  expect(product).toHaveProperty('CategoryId');
+  expect(product).toHaveProperty('QuantityPerUnit');
+  expect(product).toHaveProperty('UnitPrice');
+  expect(product).toHaveProperty('UnitsInStock');
+  expect(product).toHaveProperty('UnitsOnOrder');
+  expect(product).toHaveProperty('ReorderLevel');
+  expect(product).toHaveProperty('Discontinued');
+});
+
+it('gets an order by customerId', async () => {
+  // Arrange
+  const customerId = '1';
+  await insertOrder(db, { orderId: 1, customerId });
+
+  // Act
+  const [order] = await northwindAdapter.getOrdersByCustomerId(db, customerId);
+
+  // Assert
+  expect(order).toBeDefined();
+  expect(order).toHaveProperty('CustomerId');
+  expect(order.CustomerId).toBe(customerId);
+  expect(order).toHaveProperty('EmployeeId');
+  expect(order).toHaveProperty('Freight');
+  expect(order).toHaveProperty('OrderDate');
+  expect(order).toHaveProperty('RequiredDate');
+  expect(order).toHaveProperty('ShipAddress');
+  expect(order).toHaveProperty('ShipCity');
+  expect(order).toHaveProperty('ShipCountry');
+  expect(order).toHaveProperty('ShipName');
+  expect(order).toHaveProperty('ShipPostalCode');
+  expect(order).toHaveProperty('ShipRegion');
+  expect(order).toHaveProperty('ShipVia');
+  expect(order).toHaveProperty('ShippedDate');
 });
 
 it('gets all orders for a customer', async () => {
@@ -68,6 +104,32 @@ it('only gets orders for the specified customer', async () => {
   expect(orders).toBeDefined();
   expect(orders).toHaveLength(1);
   expect(orders[0].CustomerId).toBe(customerId1);
+});
+
+it('gets the orderDetails for an order', async () => {
+  // Arrange
+  const orderId = 1;
+  const customerId = '1';
+  const orderDetailId1 = '1';
+  const orderDetailId2 = '2';
+
+  await insertOrder(db, { orderId, customerId });
+  await insertOrderDetail(db, { orderDetailId: orderDetailId1, orderId });
+
+  // Act
+  const [orderDetail] = await northwindAdapter.getOrderDetailsByOrderId(
+    db,
+    orderId
+  );
+
+  // Assert
+  expect(orderDetail).toBeDefined();
+  expect(orderDetail).toHaveProperty('OrderId');
+  expect(orderDetail.OrderId).toBe(orderId);
+  expect(orderDetail).toHaveProperty('ProductId');
+  expect(orderDetail).toHaveProperty('UnitPrice');
+  expect(orderDetail).toHaveProperty('Quantity');
+  expect(orderDetail).toHaveProperty('Discount');
 });
 
 it('gets all the orderDetails for an order', async () => {
