@@ -33,4 +33,16 @@ const insertOrderDetail = async (db, { orderDetailId, orderId }) => {
   );
 };
 
-export { insertProduct, insertOrder, insertOrderDetail };
+const insertEmployee = async (db, { employeeId }) => {
+  return await db.run(
+    `INSERT INTO Employee (
+      Id, LastName, FirstName, Title, TitleOfCourtesy, BirthDate, HireDate,
+      Address, City, Region, PostalCode, Country, HomePhone, Extension, Photo,
+      Notes, ReportsTo, PhotoPath
+      )
+    VALUES (${employeeId}, '', '', '', '', DATETIME('now'), DATETIME('now'), '', 
+    '', '', '', '', '', '', '', '', '', '');`
+  );
+};
+
+export { insertProduct, insertOrder, insertOrderDetail, insertEmployee };

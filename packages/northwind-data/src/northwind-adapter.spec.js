@@ -3,7 +3,8 @@ import connectToDatabase from './connect-to-database';
 import {
   insertProduct,
   insertOrder,
-  insertOrderDetail
+  insertOrderDetail,
+  insertEmployee
 } from './test-utils/test-utils';
 
 const filename = `packages/northwind-data/northwind-db.sqlite`;
@@ -17,6 +18,7 @@ afterEach(async () => {
   await db.exec(`DELETE FROM Product`);
   await db.exec(`DELETE FROM "Order"`);
   await db.exec(`DELETE FROM OrderDetail`);
+  await db.exec(`DELETE FROM Employee`);
 });
 
 afterAll(async () => {
@@ -111,7 +113,6 @@ it('gets the orderDetails for an order', async () => {
   const orderId = 1;
   const customerId = '1';
   const orderDetailId1 = '1';
-  const orderDetailId2 = '2';
 
   await insertOrder(db, { orderId, customerId });
   await insertOrderDetail(db, { orderDetailId: orderDetailId1, orderId });
@@ -184,4 +185,36 @@ it('only gets orderDetails for the specified order', async () => {
   expect(orderDetails).toBeDefined();
   expect(orderDetails).toHaveLength(1);
   expect(orderDetails[0].OrderId).toBe(orderId1);
+});
+
+it('gets an employee by id', async () => {
+  // Arrange
+  const employeeId = 1;
+
+  await insertEmployee(db, { employeeId });
+
+  // Act
+  const [employee] = await northwindAdapter.getEmployeeById(db, employeeId);
+
+  // Assert
+  expect(employee).toBeDefined();
+  expect(employee).toHaveProperty('Id');
+  expect(employee.Id).toBe(employeeId);
+  expect(employee).toHaveProperty('FirstName');
+  expect(employee).toHaveProperty('LastName');
+  expect(employee).toHaveProperty('Title');
+  expect(employee).toHaveProperty('TitleOfCourtesy');
+  expect(employee).toHaveProperty('BirthDate');
+  expect(employee).toHaveProperty('HireDate');
+  expect(employee).toHaveProperty('Address');
+  expect(employee).toHaveProperty('City');
+  expect(employee).toHaveProperty('Region');
+  expect(employee).toHaveProperty('PostalCode');
+  expect(employee).toHaveProperty('Country');
+  expect(employee).toHaveProperty('HomePhone');
+  expect(employee).toHaveProperty('Extension');
+  expect(employee).toHaveProperty('Photo');
+  expect(employee).toHaveProperty('Notes');
+  expect(employee).toHaveProperty('ReportsTo');
+  expect(employee).toHaveProperty('PhotoPath');
 });
