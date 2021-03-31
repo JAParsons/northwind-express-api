@@ -10,6 +10,9 @@ const northwindAdapter = {
   },
   getEmployeeById: async (db, employeeId) => {
     return await getEmployeeById(db, employeeId);
+  },
+  getCategoryById: async (db, categoryId) => {
+    return await getCategoryById(db, categoryId);
   }
 };
 
@@ -24,6 +27,9 @@ const getOrderDetailsByOrderId = async (db, orderId) => {
 };
 const getEmployeeById = async (db, employeeId) => {
   return await db.all(`SELECT * FROM Employee WHERE Id = ${employeeId}`);
+};
+const getCategoryById = async (db, categoryId) => {
+  return await db.all(`SELECT * FROM Category WHERE Id = ${categoryId}`);
 };
 
 export default northwindAdapter;

@@ -45,4 +45,19 @@ const insertEmployee = async (db, { employeeId }) => {
   );
 };
 
-export { insertProduct, insertOrder, insertOrderDetail, insertEmployee };
+const insertCategory = async (db, { categoryId }) => {
+  return await db.run(
+    `INSERT INTO Category (
+      Id, CategoryName, Description
+      )
+    VALUES (${categoryId}, '', '');`
+  );
+};
+
+export {
+  insertProduct,
+  insertOrder,
+  insertOrderDetail,
+  insertEmployee,
+  insertCategory
+};

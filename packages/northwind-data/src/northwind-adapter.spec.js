@@ -4,7 +4,8 @@ import {
   insertProduct,
   insertOrder,
   insertOrderDetail,
-  insertEmployee
+  insertEmployee,
+  insertCategory
 } from './test-utils/test-utils';
 
 const filename = `packages/northwind-data/northwind-db.sqlite`;
@@ -19,6 +20,7 @@ afterEach(async () => {
   await db.exec(`DELETE FROM "Order"`);
   await db.exec(`DELETE FROM OrderDetail`);
   await db.exec(`DELETE FROM Employee`);
+  await db.exec(`DELETE FROM Category`);
 });
 
 afterAll(async () => {
@@ -190,7 +192,6 @@ it('only gets orderDetails for the specified order', async () => {
 it('gets an employee by id', async () => {
   // Arrange
   const employeeId = 1;
-
   await insertEmployee(db, { employeeId });
 
   // Act
@@ -217,4 +218,20 @@ it('gets an employee by id', async () => {
   expect(employee).toHaveProperty('Notes');
   expect(employee).toHaveProperty('ReportsTo');
   expect(employee).toHaveProperty('PhotoPath');
+});
+
+it('gets a category by id', async () => {
+  // Arrange
+  const categoryId = 1;
+  await insertCategory(db, { categoryId });
+
+  // Act
+  const [category] = await northwindAdapter.getCategoryById(db, categoryId);
+
+  // Assert
+  expect(category).toBeDefined();
+  expect(category).toHaveProperty('Id');
+  expect(category.Id).toBe(categoryId);
+  expect(category).toHaveProperty('CategoryName');
+  expect(category).toHaveProperty('Description');
 });
