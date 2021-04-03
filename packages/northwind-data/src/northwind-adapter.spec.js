@@ -1,5 +1,4 @@
-import northwindAdapter from './northwind-adapter';
-import connectToDatabase from './connect-to-database';
+import NorthwindAdapter from './northwind-adapter';
 import {
   insertProduct,
   insertOrder,
@@ -12,7 +11,7 @@ const filename = `packages/northwind-data/northwind-db.sqlite`;
 let db;
 
 beforeAll(async () => {
-  db = await connectToDatabase({ filename });
+  db = await NorthwindAdapter.connectToDatabase({ filename });
 });
 
 afterEach(async () => {
@@ -33,7 +32,7 @@ it('gets a product by id', async () => {
   await insertProduct(db, productId);
 
   // Act
-  const [product] = await northwindAdapter.getProductById(db, 1);
+  const [product] = await NorthwindAdapter.getProductById(db, 1);
 
   // Assert
   expect(product).toBeDefined();
@@ -56,7 +55,7 @@ it('gets an order by customerId', async () => {
   await insertOrder(db, { orderId: 1, customerId });
 
   // Act
-  const [order] = await northwindAdapter.getOrdersByCustomerId(db, customerId);
+  const [order] = await NorthwindAdapter.getOrdersByCustomerId(db, customerId);
 
   // Assert
   expect(order).toBeDefined();
@@ -84,7 +83,7 @@ it('gets all orders for a customer', async () => {
   await insertOrder(db, { orderId: 3, customerId });
 
   // Act
-  const orders = await northwindAdapter.getOrdersByCustomerId(db, customerId);
+  const orders = await NorthwindAdapter.getOrdersByCustomerId(db, customerId);
 
   // Assert
   expect(orders).toBeDefined();
@@ -102,7 +101,7 @@ it('only gets orders for the specified customer', async () => {
   await insertOrder(db, { orderId: 2, customerId: customerId2 });
 
   // Act
-  const orders = await northwindAdapter.getOrdersByCustomerId(db, customerId1);
+  const orders = await NorthwindAdapter.getOrdersByCustomerId(db, customerId1);
 
   // Assert
   expect(orders).toBeDefined();
@@ -120,7 +119,7 @@ it('gets the orderDetails for an order', async () => {
   await insertOrderDetail(db, { orderDetailId: orderDetailId1, orderId });
 
   // Act
-  const [orderDetail] = await northwindAdapter.getOrderDetailsByOrderId(
+  const [orderDetail] = await NorthwindAdapter.getOrderDetailsByOrderId(
     db,
     orderId
   );
@@ -147,7 +146,7 @@ it('gets all the orderDetails for an order', async () => {
   await insertOrderDetail(db, { orderDetailId: orderDetailId2, orderId });
 
   // Act
-  const orderDetails = await northwindAdapter.getOrderDetailsByOrderId(
+  const orderDetails = await NorthwindAdapter.getOrderDetailsByOrderId(
     db,
     orderId
   );
@@ -178,7 +177,7 @@ it('only gets orderDetails for the specified order', async () => {
   });
 
   // Act
-  const orderDetails = await northwindAdapter.getOrderDetailsByOrderId(
+  const orderDetails = await NorthwindAdapter.getOrderDetailsByOrderId(
     db,
     orderId1
   );
@@ -195,7 +194,7 @@ it('gets an employee by id', async () => {
   await insertEmployee(db, { employeeId });
 
   // Act
-  const [employee] = await northwindAdapter.getEmployeeById(db, employeeId);
+  const [employee] = await NorthwindAdapter.getEmployeeById(db, employeeId);
 
   // Assert
   expect(employee).toBeDefined();
@@ -226,7 +225,7 @@ it('gets a category by id', async () => {
   await insertCategory(db, { categoryId });
 
   // Act
-  const [category] = await northwindAdapter.getCategoryById(db, categoryId);
+  const [category] = await NorthwindAdapter.getCategoryById(db, categoryId);
 
   // Assert
   expect(category).toBeDefined();

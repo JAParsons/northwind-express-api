@@ -1,4 +1,9 @@
+import connectToSqliteDatabase from './connect-to-database';
+
 const northwindAdapter = {
+  connectToDatabase: async (filename) => {
+    return await connectToSqliteDatabase(filename);
+  },
   getProductById: async (db, id) => {
     return await getProductById(db, id);
   },
