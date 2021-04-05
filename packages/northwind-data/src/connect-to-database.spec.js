@@ -3,11 +3,11 @@ import connectToSqliteDatabase from './connect-to-database';
 
 it('can connect to a sqlite database', async () => {
   // Arrange
-  const filename = `packages/northwind-data/northwind-db.sqlite`;
+  const filename = 'packages/northwind-data/northwind-db.sqlite';
   const driver = sqlite3.Database;
 
   // Act
-  const northwindDb = await connectToSqliteDatabase({ filename, driver });
+  const northwindDb = await connectToSqliteDatabase(filename, driver);
 
   // Assert
   expect(northwindDb).toHaveProperty('config');

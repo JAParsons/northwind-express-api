@@ -1,4 +1,6 @@
 import { createServer, startServer } from './src/server.js';
 
-const server = createServer();
-startServer({ server });
+const port = process.env.PORT || 3100;
+
+const server = await createServer();
+startServer({ server, port });

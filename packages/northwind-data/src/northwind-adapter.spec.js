@@ -1,4 +1,4 @@
-import connectToDatabase from './connect-to-database';
+import connectToSqliteDatabase from './connect-to-database';
 import {
   getProductById,
   getOrdersByCustomerId,
@@ -14,11 +14,10 @@ import {
   insertCategory
 } from './test-utils/test-utils';
 
-const filename = `packages/northwind-data/northwind-db.sqlite`;
 let db;
 
 beforeAll(async () => {
-  db = await connectToDatabase({ filename });
+  db = await connectToSqliteDatabase();
 });
 
 afterEach(async () => {

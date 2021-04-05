@@ -1,9 +1,9 @@
 import express from 'express';
+import { connectToSqliteDatabase } from '@northwind/northwind-data';
 
-const PORT = process.env.PORT || 3100;
-
-const createServer = () => {
+const createServer = async () => {
   const server = express();
+  const db = await connectToSqliteDatabase();
 
   // Enable JSON parsing of request body content
   server.use(express.json());
@@ -15,9 +15,9 @@ const createServer = () => {
   return server;
 };
 
-const startServer = ({ server }) => {
-  server.listen(PORT, () =>
-    console.log(`Server now running on port ${PORT} 🚀`)
+const startServer = ({ server, port }) => {
+  server.listen(port, () =>
+    console.log(`Server now running on port ${port} 🚀`)
   );
 };
 
