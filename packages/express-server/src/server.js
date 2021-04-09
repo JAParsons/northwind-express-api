@@ -1,5 +1,8 @@
 import express from 'express';
-import { connectToSqliteDatabase } from '@northwind/northwind-data';
+import {
+  connectToSqliteDatabase,
+  getProductById
+} from '@northwind/northwind-data';
 
 const createServer = async () => {
   const server = express();
@@ -10,6 +13,12 @@ const createServer = async () => {
 
   server.get('/', (_req, res) => {
     res.send('Hello World');
+  });
+
+  server.get('/product/:id', async (req, res) => {
+    const { id } = req.params;
+    const product = await getProductById(db, id);
+    res.send(product);
   });
 
   return server;
