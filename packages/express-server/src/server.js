@@ -17,8 +17,16 @@ const createServer = async () => {
 
   server.get('/product/:id', async (req, res) => {
     const { id } = req.params;
+
+    if (!Number(id)) {
+      res.send('Invalid input');
+      return;
+    }
     const product = await getProductById(db, id);
-    res.send(product);
+    product && product.length > 0
+      ? res.send(product)
+      : res.send('No product found');
+    return;
   });
 
   return server;
