@@ -8,6 +8,8 @@
   "author": "JAParsons <johnparsons932@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-prom-bundle": "^6.3.6",
+    "prom-client": "^13.1.0"
   }
 }
