@@ -3,6 +3,9 @@ import {
   connectToSqliteDatabase,
   getProductById
 } from '@northwind/northwind-data';
+// why can't I use a relative import?
+// import prometheusMiddleware from './middleware/metrics-middleware';
+import prometheusMiddleware from '@northwind/express-server/src/middleware/metrics-middleware.js';
 
 const createServer = async () => {
   const server = express();
@@ -10,6 +13,8 @@ const createServer = async () => {
 
   // Enable JSON parsing of request body content
   server.use(express.json());
+
+  server.use(prometheusMiddleware);
 
   server.get('/', (_req, res) => {
     res.send('Hello World');
