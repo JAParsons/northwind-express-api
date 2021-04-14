@@ -1,11 +1,9 @@
 import express from 'express';
-import {
-  connectToSqliteDatabase,
-  getProductById
-} from '@northwind/northwind-data';
+import { connectToSqliteDatabase } from '@northwind/northwind-data';
 // why can't I use a relative import?
 // import prometheusMiddleware from './middleware/metrics-middleware';
 import prometheusMiddleware from '@northwind/express-server/src/middleware/metrics-middleware.js';
+import getProduct from './routes/get-product.js';
 
 const createServer = async () => {
   const server = express();
@@ -20,18 +18,9 @@ const createServer = async () => {
     res.send('Hello World');
   });
 
-  server.get('/product/:id', async (req, res) => {
-    const { id } = req.params;
-
-    if (!Number(id)) {
-      res.send('Invalid input');
-      return;
-    }
-    const product = await getProductById(db, id);
-    product && product.length > 0
-      ? res.send(product)
-      : res.send('No product found');
-    return;
+  server.get('/product/:id', (req, res) => {
+    req.db = db; // TODO - factor this out into a seperate middleware
+    getProduct(req, res);
   });
 
   return server;
