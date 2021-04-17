@@ -13,15 +13,17 @@ const createServer = async () => {
   server.use(express.json());
 
   server.use(prometheusMiddleware);
+  // Make the db connection available on every request
+  server.use((req, _res, next) => {
+    req.db = db;
+    next();
+  });
 
   server.get('/', (_req, res) => {
     res.send('Hello World');
   });
 
-  server.get('/product/:id', (req, res) => {
-    req.db = db; // TODO - factor this out into a seperate middleware
-    getProduct(req, res);
-  });
+  server.get('/product/:id', getProduct);
 
   return server;
 };
