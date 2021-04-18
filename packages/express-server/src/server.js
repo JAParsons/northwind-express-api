@@ -4,6 +4,7 @@ import { connectToSqliteDatabase } from '@northwind/northwind-data';
 // import prometheusMiddleware from './middleware/metrics-middleware';
 import prometheusMiddleware from '@northwind/express-server/src/middleware/metrics-middleware.js';
 import getProduct from './routes/get-product.js';
+import getCategory from './routes/get-category.js';
 
 const createServer = async () => {
   const server = express();
@@ -24,6 +25,7 @@ const createServer = async () => {
   });
 
   server.get('/product/:id', getProduct);
+  server.get('/category/:id', getCategory);
 
   return server;
 };
