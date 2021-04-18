@@ -1,8 +1,10 @@
 import { getProductById } from '@northwind/northwind-data';
 
 const getProduct = async (req, res) => {
-  const { id } = req.params;
-  const { db } = req;
+  const {
+    db,
+    params: { id }
+  } = req;
 
   if (!Number(id)) {
     res.status(200).send('Invalid input');

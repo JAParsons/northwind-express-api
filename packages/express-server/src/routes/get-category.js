@@ -1,8 +1,10 @@
 import { getCategoryById } from '@northwind/northwind-data';
 
 const getCategory = async (req, res) => {
-  const { id } = req.params;
-  const { db } = req;
+  const {
+    db,
+    params: { id }
+  } = req;
 
   if (!Number(id)) {
     res.status(200).send('Invalid input');
