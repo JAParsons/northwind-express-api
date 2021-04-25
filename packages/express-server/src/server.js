@@ -3,8 +3,8 @@ import { connectToSqliteDatabase } from '@northwind/northwind-data';
 // why can't I use a relative import?
 // import prometheusMiddleware from './middleware/metrics-middleware';
 import prometheusMiddleware from '@northwind/express-server/src/middleware/metrics-middleware.js';
-import getProduct from './routes/get-product.js';
-import getCategory from './routes/get-category.js';
+// TODO - find out why the file extension needs to be specified
+import { getProduct, getCategory } from './routes/index.js';
 
 const createServer = async () => {
   const server = express();
