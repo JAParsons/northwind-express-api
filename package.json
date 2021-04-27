@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon packages/express-server",
+    "start": "nodemon --experimental-specifier-resolution=node packages/express-server",
     "test": "jest"
   },
   "repository": "git@github.com:JAParsons/northwind-express-api.git",

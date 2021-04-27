@@ -1,4 +1,4 @@
-import { createServer, startServer } from './src/server.js';
+import { createServer, startServer } from './src/server';
 
 const port = process.env.PORT || 3100;
 

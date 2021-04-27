@@ -1,8 +1,7 @@
 import express from 'express';
 import { connectToSqliteDatabase } from '@northwind/northwind-data';
-import prometheusMiddleware from './middleware/metrics-middleware.js';
-// TODO - find out why the file extension needs to be specified
-import { getProduct, getCategory } from './routes/index.js';
+import prometheusMiddleware from './middleware/metrics-middleware';
+import { getProduct, getCategory } from './routes';
 
 const createServer = async () => {
   const server = express();
