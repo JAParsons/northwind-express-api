@@ -1,4 +1,5 @@
 import express from 'express';
+import { ApolloServer, gql } from 'apollo-server-express';
 import { connectToSqliteDatabase } from '@northwind/northwind-data';
 import prometheusMiddleware from './middleware/metrics-middleware';
 import { getProduct, getCategory } from './routes';
@@ -6,6 +7,22 @@ import { getProduct, getCategory } from './routes';
 const createServer = async () => {
   const server = express();
   const db = await connectToSqliteDatabase();
+
+  const apolloServer = new ApolloServer({
+    typeDefs: gql`
+      type Query {
+        hello: String
+      }
+    `,
+    resolvers: {
+      Query: {
+        hello: () => 'Hello world!'
+      }
+    }
+  });
+
+  // Set up a graphql endpoint on the express server
+  apolloServer.applyMiddleware({ app: server });
 
   // Enable JSON parsing of request body content
   server.use(express.json());
