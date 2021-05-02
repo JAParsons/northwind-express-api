@@ -1,5 +1,10 @@
 import express from 'express';
-import { ApolloServer, gql } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server-express';
+import { loadSchemaSync } from '@graphql-tools/load';
+import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
+import { addResolversToSchema } from '@graphql-tools/schema';
+import { resolvers } from './graphql/resolvers';
+import path from 'path';
 import { connectToSqliteDatabase } from '@northwind/northwind-data';
 import prometheusMiddleware from './middleware/metrics-middleware';
 import { getProduct, getCategory } from './routes';
@@ -8,17 +13,18 @@ const createServer = async () => {
   const server = express();
   const db = await connectToSqliteDatabase();
 
-  const apolloServer = new ApolloServer({
-    typeDefs: gql`
-      type Query {
-        hello: String
-      }
-    `,
-    resolvers: {
-      Query: {
-        hello: () => 'Hello world!'
-      }
+  const schema = loadSchemaSync(
+    path.join(path.resolve(), 'packages/express-server/src/graphql/*.graphql'),
+    {
+      loaders: [new GraphQLFileLoader()]
     }
+  );
+
+  const apolloServer = new ApolloServer({
+    schema: addResolversToSchema({
+      schema,
+      resolvers
+    })
   });
 
   // Set up a graphql endpoint on the express server
