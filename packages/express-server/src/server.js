@@ -24,6 +24,9 @@ const createServer = async () => {
     schema: addResolversToSchema({
       schema,
       resolvers
+    }),
+    context: () => ({
+      db
     })
   });
 
