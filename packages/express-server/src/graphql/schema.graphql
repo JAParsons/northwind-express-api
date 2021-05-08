@@ -1,3 +1,26 @@
 type Query {
+  """
+  Gets a hello world
+  """
   hello: String
+
+  """
+  Gets a product
+  """
+  product(
+    """
+    The id of the product to fetch.
+    """
+    id: Int
+  ): Product
+}
+
+type Product {
+  Id: Int!
+  ProductName: String!
+  SupplierId: Int
+  CategoryId: Int
+  QuantityPerUnit: Int
+  UnitPrice: Float
+  UnitsInStock: Int
 }
