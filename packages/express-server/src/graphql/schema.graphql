@@ -9,10 +9,20 @@ type Query {
   """
   product(
     """
-    The id of the product to fetch.
+    The id of the product to fetch
     """
     id: Int
   ): Product
+
+  """
+  Gets the orders for a customer
+  """
+  orders(
+    """
+    The id of the customer for which to fetch orders
+    """
+    id: Int
+  ): [Order]
 }
 
 type Product {
@@ -23,4 +33,21 @@ type Product {
   QuantityPerUnit: Int
   UnitPrice: Float
   UnitsInStock: Int
+}
+
+type Order {
+  Id: Int!
+  CustomerId: String!
+  EmployeeId: Int
+  OrderDate: String!
+  RequiredDate: String
+  ShippedDate: String
+  ShipVia: Int
+  Freight: Float
+  ShipName: String
+  ShipAddress: String
+  ShipCity: String
+  ShipRegion: String
+  ShipPostalCode: String
+  ShipCountry: String
 }
