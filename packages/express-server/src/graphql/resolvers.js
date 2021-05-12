@@ -1,4 +1,7 @@
-import { getProductById } from '@northwind/northwind-data';
+import {
+  getProductById,
+  getOrdersByCustomerId
+} from '@northwind/northwind-data';
 
 export const resolvers = {
   Query: {
@@ -6,6 +9,11 @@ export const resolvers = {
     product: async (_, { id }, { db }) => {
       const [product] = await getProductById(db, id);
       return product;
+    },
+    orders: async (_, { id }, { db }) => {
+      const orders = await getOrdersByCustomerId(db, id);
+      console.log(orders);
+      return orders;
     }
   }
 };
