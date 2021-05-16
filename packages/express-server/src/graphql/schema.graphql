@@ -23,6 +23,16 @@ type Query {
     """
     id: Int
   ): [Order]
+
+  """
+  Gets the details of the items within an order
+  """
+  orderDetails(
+    """
+    The id of the order for which to fetch details
+    """
+    id: Int
+  ): [OrderDetail]
 }
 
 type Product {
@@ -50,4 +60,13 @@ type Order {
   ShipRegion: String
   ShipPostalCode: String
   ShipCountry: String
+}
+
+type OrderDetail {
+  Id: Int!
+  OrderId: Int!
+  ProductId: Int
+  UnitPrice: Float
+  Quantity: Int
+  Discount: Float
 }
