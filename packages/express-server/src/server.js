@@ -7,7 +7,7 @@ import { resolvers } from './graphql/resolvers';
 import path from 'path';
 import { connectToSqliteDatabase } from '@northwind/northwind-data';
 import prometheusMiddleware from './middleware/metrics-middleware';
-import { getProduct, getCategory } from './routes';
+import { getProduct, getCategory, getOrders } from './routes';
 
 const createServer = async () => {
   const server = express();
@@ -49,6 +49,7 @@ const createServer = async () => {
 
   server.get('/product/:id', getProduct);
   server.get('/category/:id', getCategory);
+  server.get('/orders/:id', getOrders);
 
   return server;
 };
