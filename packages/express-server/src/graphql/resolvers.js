@@ -1,6 +1,7 @@
 import {
   getProductById,
-  getOrdersByCustomerId
+  getOrdersByCustomerId,
+  getOrderDetailsByOrderId
 } from '@northwind/northwind-data';
 
 export const resolvers = {
@@ -12,8 +13,11 @@ export const resolvers = {
     },
     orders: async (_, { id }, { db }) => {
       const orders = await getOrdersByCustomerId(db, id);
-      console.log(orders);
       return orders;
+    },
+    orderDetails: async (_, { id }, { db }) => {
+      const orderDetails = await getOrderDetailsByOrderId(db, id);
+      return orderDetails;
     }
   }
 };
