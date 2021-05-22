@@ -1,5 +1,6 @@
 import {
   getProductById,
+  getCategoryById,
   getOrdersByCustomerId,
   getOrderDetailsByOrderId,
   getEmployeeById
@@ -11,6 +12,10 @@ export const resolvers = {
     product: async (_, { id }, { db }) => {
       const [product] = await getProductById(db, id);
       return product;
+    },
+    category: async (_, { id }, { db }) => {
+      const [category] = await getCategoryById(db, id);
+      return category;
     },
     orders: async (_, { id }, { db }) => {
       const orders = await getOrdersByCustomerId(db, id);
