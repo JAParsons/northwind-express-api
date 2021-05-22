@@ -15,6 +15,16 @@ type Query {
   ): Product
 
   """
+  Gets a product category
+  """
+  category(
+    """
+    The id of the product category to fetch
+    """
+    id: Int
+  ): Category
+
+  """
   Gets the orders for a customer
   """
   orders(
@@ -53,6 +63,12 @@ type Product {
   QuantityPerUnit: Int
   UnitPrice: Float
   UnitsInStock: Int
+}
+
+type Category {
+  Id: Int!
+  CategoryName: String!
+  Description: String
 }
 
 type Order {
